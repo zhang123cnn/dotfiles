@@ -10,9 +10,9 @@
 	st = !sh -c \"git status -uno --porcelain | sed -e \\\"s|^\\(...\\)fixedincome/|\\1|\\\"\"
 	gvimdiff = difftool -t gvimdiff
     lastcommit = log --pretty=format:'%H' -n 1
-    xlog = log --oneline --decorate --graph
-    xloga = log --all --oneline --decorate --graph
-    xlogap = log --first-parent --oneline --decorate --graph
+    logx = log --oneline --decorate --graph
+    loga = log --all --oneline --decorate --graph
+    logap = log --first-parent --oneline --decorate --graph
 [merge]
 	tool = gvimdiff
 	conflictstyle = diff3
