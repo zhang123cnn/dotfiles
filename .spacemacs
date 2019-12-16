@@ -39,6 +39,8 @@ values."
      (go :variables
          go-use-gometalinter t
          gofmt-command "goimports"
+         go-backend 'lsp
+         godoc-at-point-function 'godoc-gogetdoc
          go-tab-width 4)
      rust
      csv
@@ -68,10 +70,11 @@ d
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
      ;; spell-checking
-     ;; syntax-checking
+     syntax-checking
      ;; version-control
      ;; semantic
      cscope
+     lsp
      (c-c++ :variables
             c-c++-default-mode-for-headers 'c++-mode
             c-c++-enable-clang-support t)
@@ -277,7 +280,7 @@ values."
    ;; If non nil line numbers are turned on in all `prog-mode' and `text-mode'
    ;; derivatives. If set to `relative', also turns on relative line numbers.
    ;; (default nil)
-   dotspacemacs-line-numbers t
+   ;; dotspacemacs-line-numbers t
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -378,7 +381,7 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (go-guru go-eldoc company-go go-mode transient company yasnippet toml-mode racer pos-tip cargo rust-mode phpunit phpcbf php-mode csv-mode web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern tern coffee-mode sass-mode pyenv-mode orgit markdown-toc magit-gitflow hy-mode helm-gitignore helm-cscope evil-magit magit magit-popup git-commit ghub let-alist company-web company-dcd ivy company-anaconda anaconda-mode ac-ispell flycheck yapfify yaml-mode xterm-color web-mode tagedit smeargle slim-mode shell-pop scss-mode pyvenv pytest py-isort pug-mode pip-requirements multi-term mmm-mode markdown-mode live-py-mode less-css-mode dash-functional helm-pydoc helm-css-scss xcscope helm-company helm-c-yasnippet haml-mode gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy with-editor eshell-z eshell-prompt-extras esh-help emmet-mode disaster d-mode cython-mode web-completion-data company-statistics flycheck-dmd-dub company-c-headers cmake-mode clang-format auto-yasnippet pythonic auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint intero indent-guide hungry-delete hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-hoogle helm-flx helm-descbinds helm-ag haskell-snippets google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump diminish define-word company-ghci company-ghc column-enforce-mode cmm-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
+    (flycheck-rust flycheck-pos-tip flycheck-gometalinter go-guru go-eldoc company-go go-mode transient company yasnippet toml-mode racer pos-tip cargo rust-mode phpunit phpcbf php-mode csv-mode web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern tern coffee-mode sass-mode pyenv-mode orgit markdown-toc magit-gitflow hy-mode helm-gitignore helm-cscope evil-magit magit magit-popup git-commit ghub let-alist company-web company-dcd ivy company-anaconda anaconda-mode ac-ispell flycheck yapfify yaml-mode xterm-color web-mode tagedit smeargle slim-mode shell-pop scss-mode pyvenv pytest py-isort pug-mode pip-requirements multi-term mmm-mode markdown-mode live-py-mode less-css-mode dash-functional helm-pydoc helm-css-scss xcscope helm-company helm-c-yasnippet haml-mode gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy with-editor eshell-z eshell-prompt-extras esh-help emmet-mode disaster d-mode cython-mode web-completion-data company-statistics flycheck-dmd-dub company-c-headers cmake-mode clang-format auto-yasnippet pythonic auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint intero indent-guide hungry-delete hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-hoogle helm-flx helm-descbinds helm-ag haskell-snippets google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump diminish define-word company-ghci company-ghc column-enforce-mode cmm-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
